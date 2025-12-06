@@ -4,13 +4,21 @@
         src: local('SuissnordDeux-zr271.ttf'),
 }
 *{
-    font-family: monospace;
-    font-size: medium;
-    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
 }
 .header {
     font-family: 'BESTFONTforheader',;
     text-align: center;
     background-color: rgb(45, 102, 247);
-    font-size: xx-large;
+    display: flex;
+    justify-content: space-between; /* pushes items to opposite ends */
+    align-items: center; /* vertically centers them */
+    padding: 10px 20px;
+   
+}
+#points {
+    font-family: Arial, Helvetica, sans-serif,;
+    text-align: right;
+    background-color: rgb(255, 223, 0);
+    vertical-align: top;
 }
