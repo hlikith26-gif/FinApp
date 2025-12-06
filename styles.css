@@ -11,3 +11,8 @@
     text-align: center;
     background-color: rgb(45, 102, 247);
 }
+#points {
+    font-family: Arial, Helvetica, sans-serif,;
+    text-align: left;
+    background-color: rgb(255, 223, 0);
+}
