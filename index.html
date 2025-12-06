@@ -1,17 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinApp Dashboard</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1 class="header">FinApp</h1>
-        <p id="points">FP:000</p>
-    </header>
 
-    <h3> FinApp is the perfect app for students to track and manage their budget.</h3>
+<header>
+    <img src="FinApp (2) (1).png" alt="FinApp">
+    <p class="points">FP: <span id="fpValue">697</span></p>
+</header>
+
+<div class="container">
+
+    <!-- BUDGET CARD -->
+    <div class="card fade">
+        <h2>Monthly Budget</h2>
+        <p class="budget">₹1,00,000</p>
+    </div>
+
+    <!-- BAR CHART -->
+    <div class="card fade">
+        <h2>Spendings Tracker</h2>
+
+        <div class="chart">
+            <div class="bar" style="--value: 70%">
+                <span>Oct (70k)</span>
+            </div>
+            <div class="bar" style="--value: 60%">
+                <span>Nov (60k)</span>
+            </div>
+            <div class="bar" style="--value: 85%">
+                <span>Dec (85k)</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div class="card fade">
+        <h2>Categories</h2>
+        <ul class="categories">
+            <li>Food</li>
+            <li>Transport</li>
+            <li>Shopping</li>
+            <li>Subscriptions</li>
+            <li>Education</li>
+        </ul>
+    </div>
+
+    <!-- ADD EXPENSE FORM -->
+    <div class="card fade">
+        <h2>Add an Expense</h2>
+        <form id="expenseForm">
+            <input type="text" id="expName" placeholder="Expense name" required>
+            <input type="number" id="expAmount" placeholder="Amount (₹)" required>
+            <select id="expCat">
+                <option>Food</option>
+                <option>Transport</option>
+                <option>Shopping</option>
+                <option>Subscriptions</option>
+                <option>Education</option>
+            </select>
+            <button type="submit">Add Expense</button>
+        </form>
+
+        <p id="addedMsg" class="hidden">Expense added ✔️</p>
+    </div>
+
+</div>
+<div class="card fade">
+        <h2>Sugestions & Comments</h2>
+        <ul class="categories">
+            <li>Within Budget</li>
+            <li>Wise Spendings</li>
+            <li>Importance to needs</li>
+            <li>Reduce food purchaces</li>
+            <li>Find cheaper alternatives to reduce spendings</li>
+        </ul>
+    </div>
+
+
 </body>
 </html>
