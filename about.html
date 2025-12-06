@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About the Creators</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Orbitron', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #0b0f1a;
+      color: #e0eaff;
+    }
+    header {
+      background: #1a1f35;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin: 0;
+      color: #4ee1ff;
+    }
+    .team-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 40px 20px;
+      gap: 30px;
+    }
+    .member-card {
+      background: #1f2435;
+      border-radius: 12px;
+      padding: 20px;
+      width: 250px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .member-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 200, 255, 0.3);
+    }
+    .member-card img {
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 3px solid #4ee1ff;
+    }
+    .member-card h2 {
+      margin: 10px 0 5px;
+      font-size: 1.3rem;
+      color: #4ee1ff;
+    }
+    .member-card p {
+      font-size: 0.9rem;
+      color: #cce0ff;
+      margin: 5px 0;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #1a1f35;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>About the Creators</h1>
+    <p>Meet the team behind our financial tracking project</p>
+  </header>
+
+  <div class="team-container">
+    <!-- Member 1 -->
+    <div class="member-card">
+      <img src="images/mihit.jpg" alt="Mihit Goel">
+      <h2>Mihit Goel</h2>
+      <p>Project Lead & Developer</p>
+      <p>Responsible for coding and design of the app.</p>
+    </div>
+
+    <!-- Member 2 -->
+    <div class="member-card">
+      <img src="images/member2.jpg" alt="Member 2">
+      <h2>Member 2</h2>
+      <p>UI/UX Designer</p>
+      <p>Created layouts, color themes, and user-friendly interface.</p>
+    </div>
+
+    <!-- Member 3 -->
+    <div class="member-card">
+      <img src="images/member3.jpg" alt="Member 3">
+      <h2>Member 3</h2>
+      <p>Content & Marketing</p>
+      <p>Handles app tips, suggestions, and communication with users.</p>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Financial Tracker App | All Rights Reserved
+  </footer>
+
+</body>
+</html>
