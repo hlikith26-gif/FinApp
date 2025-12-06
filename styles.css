@@ -1,0 +1,13 @@
+
+@font-face {
+        font-family: 'BESTFONTforheader'; /* Give your font a unique name */
+        src: local('SuissnordDeux-zr271.ttf'),
+}
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.header {
+    font-family: 'BESTFONTforheader',;
+    text-align: center;
+    background-color: rgb(45, 102, 247);
+}
