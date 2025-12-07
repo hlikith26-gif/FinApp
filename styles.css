@@ -159,7 +159,7 @@ button:hover {
 
 /* About button link color */
 .about-button a {
-    color: var(--text);
+    color: var(--white);
     text-decoration: none;
     display: inline-block;
 }
