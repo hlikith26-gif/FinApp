@@ -16,21 +16,22 @@
 
 <div class="container">
 
+    <!-- Set Monthly Budget -->
     <div class="card fade">
-        <h2>Earnings</h2>
-        <p class="budget"><input type="number" id="expAmount" placeholder="Amount (₹)" required></p>
-        <button class="money-button">Send</button>
+        <h2>Set Budget</h2>
+        <p class="budget"><input type="number" id="setBudget" placeholder="Amount (₹)" required></p>
+        <button class="money-button" id="setBudgetBtn">Set Budget</button>
     </div>
-    <!-- BUDGET CARD -->
+
+    <!-- Monthly Budget Card -->
     <div class="card fade">
         <h2>Monthly Budget</h2>
-        <p class="budget"></p>
+        <p class="budget">₹<span id="monthlyBudget">100000</span></p>
     </div>
 
-    <!-- BAR CHART -->
+    <!-- Bar Chart -->
     <div class="card fade">
         <h2>Spendings Tracker</h2>
-
         <div class="chart">
             <div class="bar" style="--value: 70%">
                 <span>Oct (70k)</span>
@@ -46,11 +47,14 @@
             </div>
         </div>
     </div>
-<div>
-   <h2>Spe</h2>
-        <p class="budget">₹1,00,000</p>
-</div>
-    <!-- CATEGORIES -->
+
+    <!-- Total Expenses -->
+    <div class="card fade">
+        <h2>Total Expenses</h2>
+        <p>Total Expenses: ₹<span id="totalExpenses">0.00</span></p>
+    </div>
+
+    <!-- Categories -->
     <div class="card fade">
         <h2>Categories</h2>
         <ul class="categories">
@@ -62,7 +66,7 @@
         </ul>
     </div>
 
-    <!-- ADD EXPENSE FORM -->
+    <!-- Add Expense Form -->
     <div class="card fade">
         <h2>Add an Expense</h2>
         <form id="expenseForm">
@@ -77,12 +81,12 @@
             </select>
             <button type="submit">Add Expense</button>
         </form>
-
         <p id="addedMsg" class="hidden">Expense added ✔️</p>
     </div>
 
 </div>
 
+<!-- Suggestions & Comments -->
 <div class="card fade">
     <h2>Suggestions & Comments</h2>
     <ul class="categories">
@@ -96,7 +100,7 @@
 
 <div>
     <a href="about.html">
-        <button class="about-button"><a href="about.html">About Us</a></button>
+        <button class="about-button">About Us</button>
     </a>
 </div>
 
