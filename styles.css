@@ -157,6 +157,22 @@ button:hover {
     opacity: 0.8;
 }
 
+/* About button link color */
+.about-button a {
+    color: var(--text);
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* Suggestions & Comments links */
+.item-link a {
+    color: var(--text);
+    text-decoration: none;
+}
+.item-link a:hover {
+    color: var(--blue);
+}
+
 /* ADDED MESSAGE */
 .hidden {
     display: none;
