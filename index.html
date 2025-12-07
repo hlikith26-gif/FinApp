@@ -11,14 +11,20 @@
 <header>
     <img src="FinApp (2) (1).png" alt="FinApp">
     <p class="points">FP: <span id="fpValue">697</span></p>
+    <a href="login.html"><button class="next-button">Login</button></a>
 </header>
 
 <div class="container">
 
+    <div class="card fade">
+        <h2>Earnings</h2>
+        <p class="budget"><input type="number" id="expAmount" placeholder="Amount (₹)" required></p>
+        <button class="money-button">Send</button>
+    </div>
     <!-- BUDGET CARD -->
     <div class="card fade">
         <h2>Monthly Budget</h2>
-        <p class="budget">₹1,00,000</p>
+        <p class="budget"></p>
     </div>
 
     <!-- BAR CHART -->
@@ -45,11 +51,11 @@
     <div class="card fade">
         <h2>Categories</h2>
         <ul class="categories">
-            <li>Food<input type="number" id="expAmount" placeholder="Amount (₹)" required></li>
-            <li>Transport<input type="number" id="expAmount" placeholder="Amount (₹)" required></li>
-            <li>Shopping<input type="number" id="expAmount" placeholder="Amount (₹)" required></li>
-            <li>Subscriptions<input type="number" id="expAmount" placeholder="Amount (₹)" required></li>
-            <li>Education<input type="number" id="expAmount" placeholder="Amount (₹)" required></li>
+            <li>Food</li>
+            <li>Transport</li>
+            <li>Shopping</li>
+            <li>Subscriptions</li>
+            <li>Education</li>
         </ul>
     </div>
 
