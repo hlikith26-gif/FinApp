@@ -25,7 +25,7 @@
     <!-- Monthly Budget Card -->
     <div class="card fade">
         <h2>Monthly Budget</h2>
-        <p class="budget">₹<span id="monthlyBudget">100000</span></p>
+        <p class="budget">₹<span id="monthlyBudget" placeholder="Enter Monthly Budget">____________</span></p>
     </div>
 
     <!-- Total Expenses -->
@@ -33,6 +33,18 @@
         <h2>Total Expenses</h2>
         <p>Total Expenses: ₹<span id="totalExpenses">0.00</span></p>
     </div>
+    <!--Set Income-->
+    <div class="card fade">
+        <h2>Set Income</h2>
+        <p class="budget"><input type="number" id="setIncome" placeholder="Amount (₹)" required></p>
+        <button class="money-button" id="setIncomeBtn">Set Income</button>
+    <!--Monthly Income-->
+    </div>
+     <div class="card fade">
+        <h2>Monthly Income</h2>
+        <p class="budget">₹<span id="monthlyIncome">100000</span></p>
+    </div>
+
 
     <!-- Categories -->
     <div class="card fade">
@@ -43,6 +55,7 @@
             <li>Shopping</li>
             <li>Subscriptions</li>
             <li>Education</li>
+            <li>Others</li>
         </ul>
     </div>
 
@@ -58,6 +71,7 @@
                 <option>Shopping</option>
                 <option>Subscriptions</option>
                 <option>Education</option>
+                <option>Others</option>
             </select>
             <button type="submit">Add Expense</button>
         </form>
