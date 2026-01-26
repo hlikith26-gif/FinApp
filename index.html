@@ -9,7 +9,7 @@
 <body>
 
 <header>
-    <img src="FinAppLogo.png" style="width: 400px;" height="267px" alt="FinApp">
+    <img src="FinAppLogo.png" style="width:400px;height:auto;" alt="FinApp">
     <a href="login.html"><button class="next-button">Login</button></a>
 </header>
 
@@ -18,34 +18,41 @@
     <!-- Set Monthly Budget -->
     <div class="card fade">
         <h2>Set Budget</h2>
-        <p class="budget"><input type="number" id="setBudget" placeholder="Amount (₹)" required></p>
-        <button class="money-button" id="setBudgetBtn">Set Budget</button>
+        <input type="number" id="setBudget" placeholder="Amount (₹)">
+        <button id="setBudgetBtn">Set Budget</button>
     </div>
 
-    <!-- Monthly Budget Card -->
+    <!-- Monthly Budget -->
     <div class="card fade">
         <h2>Monthly Budget</h2>
-        <p class="budget">₹<span id="monthlyBudget" placeholder="Enter Monthly Budget">____________</span></p>
+        <p class="budget">₹<span id="monthlyBudget">0</span></p>
     </div>
 
     <!-- Total Expenses -->
     <div class="card fade">
         <h2>Total Expenses</h2>
-        <p>Total Expenses: ₹<span id="totalExpenses">0.00</span></p>
-    </div>
-    <a href="linkpayments.html"><button>Link Payments</button></a>
-    <!--Set Income-->
-    <div class="card fade">
-        <h2>Set Income</h2>
-        <p class="budget"><input type="number" id="setIncome" placeholder="Amount (₹)" required></p>
-        <button class="money-button" id="setIncomeBtn">Set Income</button>
-    <!--Monthly Income-->
-    </div>
-     <div class="card fade">
-        <h2>Monthly Income</h2>
-        <p class="budget">₹<span id="monthlyIncome">100000</span></p>
+        <p class="budget">₹<span id="totalExpenses">0.00</span></p>
     </div>
 
+    <!-- All Expenses -->
+    <div class="card fade">
+        <h2>All Expenses</h2>
+        <ul id="expenseList" class="categories"></ul>
+
+    </div>
+
+    <!-- Set Income -->
+    <div class="card fade">
+        <h2>Set Income</h2>
+        <input type="number" id="setIncome" placeholder="Amount (₹)">
+        <button id="setIncomeBtn">Set Income</button>
+    </div>
+
+    <!-- Monthly Income -->
+    <div class="card fade">
+        <h2>Monthly Income</h2>
+        <p class="budget">₹<span id="monthlyIncome">0</span></p>
+    </div>
 
     <!-- Categories -->
     <div class="card fade">
@@ -60,7 +67,7 @@
         </ul>
     </div>
 
-    <!-- Add Expense Form -->
+    <!-- Add Expense -->
     <div class="card fade">
         <h2>Add an Expense</h2>
         <form id="expenseForm">
@@ -76,27 +83,9 @@
             </select>
             <button type="submit">Add Expense</button>
         </form>
-        <p id="addedMsg" class="hidden">Expense added ✔️</p>
+        <p id="addedMsg" style="display:none;color:#3FB950;">Expense added ✅</p>
     </div>
-
-</div>
-
-<!-- Suggestions & Comments -->
-<div class="card fade">
-    <h2>Tips</h2>
-    <ul class="categories">
-        <li class="item-link"><a href="withinbudget.html">Within Budget</a></li>
-        <li class="item-link"><a href="wisespendings.html">Wise Spending</a></li>
-        <li class="item-link"><a href="importanceofneeds.html">Importance of Needs</a></li>
-        <li class="item-link"><a href="reducefoodpurchases.html">Reduce food purchases</a></li>
-        <li class="item-link"><a href="cheaperalternatives.html">Always look for cheaper alternatives</a></li>
-    </ul>
-</div>
-
-<div>
-    <a href="about.html">
-        <button class="about-button">About Us</button>
-    </a>
+    
 </div>
 
 <script src="script.js"></script>

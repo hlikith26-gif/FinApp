@@ -1,11 +1,16 @@
 let yourexpenses = 0;
 let monthlyBudget = 0;
 let monthlyIncome = 0;
+let expenseItems = [];
 
 // ----------------------------
 // Expense Logic
 // ----------------------------
 const form = document.getElementById("expenseForm");
+const totalSpan = document.getElementById("totalExpenses");
+const expenseList = document.getElementById("expenseList");
+const addedMsg = document.getElementById("addedMsg");
+
 if (form) {
     form.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -16,18 +21,27 @@ if (form) {
 
         if (!name || isNaN(amount) || amount <= 0) return;
 
+        // Add to total
         yourexpenses += amount;
 
-        // Update total expenses display
-        const totalSpan = document.getElementById("totalExpenses");
-        if (totalSpan) {
-            totalSpan.innerText = yourexpenses.toLocaleString("en-US", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            });
-        }
+        // Store expense
+        expenseItems.push({ name, amount, category });
 
-        // Alerts
+        // Update total display
+        totalSpan.textContent = yourexpenses.toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+        // Render expense list
+        expenseList.innerHTML = "";
+        expenseItems.forEach(exp => {
+            const li = document.createElement("li");
+            li.textContent = `${exp.name} - ₹${exp.amount.toLocaleString("en-US")} - ${exp.category}`;
+            expenseList.appendChild(li);
+        });
+
+        // Budget alerts
         if (monthlyBudget > 0 && yourexpenses > monthlyBudget) {
             alert("You have spent more than your Budget!");
         }
@@ -36,80 +50,60 @@ if (form) {
             alert("You are in debt");
         }
 
-        // Confirmation message
-        const msg = document.getElementById("addedMsg");
-        if (msg) {
-            msg.classList.remove("hidden");
-            msg.innerText = `Added: ${name} - ₹${amount.toLocaleString("en-US")} (${category})`;
-            setTimeout(() => msg.classList.add("hidden"), 1500);
-        }
+        // Confirmation
+        addedMsg.style.display = "block";
+        setTimeout(() => addedMsg.style.display = "none", 1500);
 
-        this.reset();
+        // Clear inputs (dropdown stays)
+        document.getElementById("expName").value = "";
+        document.getElementById("expAmount").value = "";
     });
 }
 
 // ----------------------------
-// Set Monthly Budget Logic
+// Set Monthly Budget
 // ----------------------------
 const budgetInput = document.getElementById("setBudget");
 const budgetBtn = document.getElementById("setBudgetBtn");
 const budgetDisplay = document.getElementById("monthlyBudget");
 
-if (budgetBtn && budgetInput && budgetDisplay) {
-    budgetBtn.addEventListener("click", function () {
+if (budgetBtn) {
+    budgetBtn.addEventListener("click", () => {
         const amount = Number(budgetInput.value);
-
-        if (isNaN(amount) || amount <= 0) {
-            alert("Please enter a valid budget amount.");
-            return;
-        }
+        if (isNaN(amount) || amount <= 0) return;
 
         if (monthlyIncome > 0 && amount > monthlyIncome) {
-            alert("Your budget is more than your Income, choose a different Budget");
-            budgetInput.value = "";
+            alert("Budget cannot exceed income");
             return;
         }
 
         monthlyBudget = amount;
-        budgetDisplay.innerText = amount.toLocaleString("en-US");
+        budgetDisplay.textContent = amount.toLocaleString("en-US");
         budgetInput.value = "";
     });
 }
 
 // ----------------------------
-// Set Monthly Income Logic
+// Set Monthly Income
 // ----------------------------
-const setIncomeInput = document.getElementById("setIncome");
-const setIncomeBtn = document.getElementById("setIncomeBtn");
-const monthlyIncomeSpan = document.getElementById("monthlyIncome");
+const incomeInput = document.getElementById("setIncome");
+const incomeBtn = document.getElementById("setIncomeBtn");
+const incomeDisplay = document.getElementById("monthlyIncome");
 
-// Load saved income on page load
 const savedIncome = localStorage.getItem("monthlyIncome");
 if (savedIncome) {
     monthlyIncome = Number(savedIncome);
-    monthlyIncomeSpan.textContent = monthlyIncome.toLocaleString("en-US");
+    incomeDisplay.textContent = monthlyIncome.toLocaleString("en-US");
 }
 
-if (setIncomeBtn) {
-    setIncomeBtn.addEventListener("click", () => {
-        const income = Number(setIncomeInput.value);
-
-        if (isNaN(income) || income <= 0) {
-            alert("Please enter a valid income amount");
-            return;
-        }
+if (incomeBtn) {
+    incomeBtn.addEventListener("click", () => {
+        const income = Number(incomeInput.value);
+        if (isNaN(income) || income <= 0) return;
 
         monthlyIncome = income;
-        monthlyIncomeSpan.textContent = income.toLocaleString("en-US");
+        incomeDisplay.textContent = income.toLocaleString("en-US");
         localStorage.setItem("monthlyIncome", income);
-
-        // If current budget becomes invalid
-        if (monthlyBudget > income) {
-            alert("Your budget is more than your Income, choose a different Budget");
-            monthlyBudget = 0;
-            if (budgetDisplay) budgetDisplay.innerText = "0";
-        }
-
-        setIncomeInput.value = "";
+        incomeInput.value = "";
     });
 }
