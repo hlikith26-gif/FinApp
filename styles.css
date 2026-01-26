@@ -197,3 +197,14 @@ button:hover {
 body {
     background-image: url('Screenshot 2025-12-07 111515.png'); /* path to your image */
 }
+#header2 {
+    display: flex;
+    justify-content: center;
+    background: var(--panel);
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+}
+
+#header2 h1 {
+    margin: 0;
+}

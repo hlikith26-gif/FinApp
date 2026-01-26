@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header id="header2"><h1>Link Your Payments</h1></header>
+    <div class="card fade">
+    <h2>Link UPI</h2>
+    <ul class="categories">
+        <li class="item-link"><a href="https://www.phonepe.com/">PhonePe</a></li>
+        <li class="item-link"><a href="https://paytm.com/">PayTM</a></li>
+        <li class="item-link"><a href="https://pay.google.com">Google Pay</a></li>
+        <li class="item-link"><a href="https://navi.com/navi-upi">Navi UPI</a></li>
+        <li class="item-link"><a href="https://www.bhimupi.org.in/">BHIM</a></li>
+        <li class="item-link"><a href="https://www.amazon.in/amazonpay/home?ref_=mweb_navm_apay">Amazon Pay</a></li>
+        <li class="item-link"><a href="https://cred.club/">CRED</a></li>
+    </ul>
+</div>
+<div class="card fade" id="addCard">
+    <h2>Add Card</h2>
+    <ul class="categories">
+        <li>
+            <select>
+                <option>Credit Card</option>
+                <option>Debit Card</option>
+            </select>
+            <input type="text" placeholder="Full Name">
+            <input type="text" placeholder="Card Number">
+            <input type="text" placeholder="Issue Date">
+            <input type="text" placeholder="Expiry Date">
+            <input type="text" placeholder="CVV">
+        </li>
+    </ul>
+    <button id="addCardBtn">+ Add</button>
+    <p id="cardMessage"></p>
+</div>
+   
+</body>
+<script>
+document.getElementById("addCardBtn").addEventListener("click", () => {
+    const card = document.getElementById("addCard");
+    const inputs = card.querySelectorAll("input");
+    const message = document.getElementById("cardMessage");
+
+    // Clear ONLY text inputs
+    inputs.forEach(input => input.value = "");
+
+    // Show success message
+    message.textContent = "Card Added ✅";
+
+    // Optional: hide after 2s
+    setTimeout(() => {
+        message.textContent = "";
+    }, 2000);
+});
+</script>
+
+
+</html>
