@@ -2,7 +2,7 @@
 :root {
     --bg: #0D1117;
     --panel: #161B22;
-    --border: #30363D;
+    --border: #FAF9F6; /* original: --border: #30363D; DONT Delete*/
     --text: #C9D1D9;
     --blue: #58A6FF;
     --green: #3FB950;
