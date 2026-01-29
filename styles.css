@@ -228,3 +228,7 @@ footer::after {
     height: 1px;
     background: var(--border);
 }
+.button-wrapper {
+    border-radius: 10px;
+    margin-bottom: 25px;
+}

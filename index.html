@@ -27,16 +27,21 @@
         <h2>Monthly Budget</h2>
         <p class="budget">₹<span id="monthlyBudget">0</span></p>
     </div>
+    <div class="card fade">
+        <h2>Remaining Budget</h2>
+        <p class="budget">₹<span id="RBudget">0</span></p>
+    </div>
 
     <!-- Total Expenses -->
     <div class="card fade">
         <h2>Total Expenses</h2>
         <p class="budget">₹<span id="totalExpenses">0.00</span></p>
+        <a href="linkpayments.html"><button class="button-wrapper">Link Payments</button></a>
     </div>
-
     <!-- All Expenses -->
     <div class="card fade">
         <h2>All Expenses</h2>
+        <i>List:</i>
         <ul id="expenseList" class="categories"></ul>
 
     </div>
@@ -52,19 +57,6 @@
     <div class="card fade">
         <h2>Monthly Income</h2>
         <p class="budget">₹<span id="monthlyIncome">0</span></p>
-    </div>
-
-    <!-- Categories -->
-    <div class="card fade">
-        <h2>Categories</h2>
-        <ul class="categories">
-            <li>Food</li>
-            <li>Transport</li>
-            <li>Shopping</li>
-            <li>Subscriptions</li>
-            <li>Education</li>
-            <li>Others</li>
-        </ul>
     </div>
 
     <!-- Add Expense -->
@@ -85,6 +77,19 @@
         </form>
         <p id="addedMsg" style="display:none;color:#3FB950;">Expense added ✅</p>
     </div>
+
+    <!-- Categories -->
+    <div class="card fade">
+        <h2>Categories</h2>
+        <ul class="categories">
+            <li>Food</li>
+            <li>Transport</li>
+            <li>Shopping</li>
+            <li>Subscriptions</li>
+            <li>Education</li>
+            <li>Others</li>
+        </ul>
+    </div>
     <!-- Suggestions & Comments -->
 <div class="card fade">
     <h2>Tips</h2>
@@ -97,11 +102,7 @@
     </ul>
 </div>
 
-<div>
-    <a href="about.html">
-        <button class="about-button">About Us</button>
-    </a>
-</div>
+
 
 </div>
 

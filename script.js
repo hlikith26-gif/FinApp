@@ -54,9 +54,11 @@ if (form) {
         addedMsg.style.display = "block";
         setTimeout(() => addedMsg.style.display = "none", 1500);
 
-        // Clear inputs (dropdown stays)
+        // Clear inputs
         document.getElementById("expName").value = "";
         document.getElementById("expAmount").value = "";
+
+        updateRemainingBudget(); // ✅ FIX: recalc after expense
     });
 }
 
@@ -80,6 +82,8 @@ if (budgetBtn) {
         monthlyBudget = amount;
         budgetDisplay.textContent = amount.toLocaleString("en-US");
         budgetInput.value = "";
+
+        updateRemainingBudget(); // ✅ FIX: recalc after setting budget
     });
 }
 
@@ -106,4 +110,28 @@ if (incomeBtn) {
         localStorage.setItem("monthlyIncome", income);
         incomeInput.value = "";
     });
+}
+
+// ----------------------------
+// Remaining Budget (FIXED)
+// ----------------------------
+function updateRemainingBudget() {
+    const budgetSpan = document.getElementById("monthlyBudget");
+    const expensesSpan = document.getElementById("totalExpenses");
+    const rSpan = document.getElementById("RBudget");
+
+    if (!budgetSpan || !expensesSpan || !rSpan) return;
+
+    // ✅ FIX: spans use innerText, not value
+    const currentBudget = Number(budgetSpan.innerText.replace(/,/g, "")) || 0;
+    const totalExpenses = Number(expensesSpan.innerText.replace(/,/g, "")) || 0;
+
+    const remaining = currentBudget - totalExpenses;
+
+    rSpan.innerText = remaining.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+
+    rSpan.style.color = remaining < 0 ? "red" : "#3FB950";
 }
