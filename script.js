@@ -156,15 +156,36 @@ function updateRemainingBudget() {
 // ----------------------------
 // Undo / Delete Last Expense
 // ----------------------------
-function deleteLastExpense() {
-  if (expenseItems.length === 0) return;
+const undoBtn = document.getElementById("undoBtn");
 
-  expenseItems.pop();
-  saveData();
-  renderExpenses();
-  updateTotalExpenses();
-  updateRemainingBudget();
+if (undoBtn) {
+    undoBtn.addEventListener("click", () => {
+        console.log("UNDO CLICKED");
+
+        if (expenseItems.length === 0) {
+            alert("Nothing to undo!");
+            return;
+        }
+
+        expenseItems.pop();
+
+        yourexpenses = expenseItems.reduce(
+            (sum, exp) => sum + exp.amount, 0
+        );
+
+        totalSpan.textContent = yourexpenses.toFixed(2);
+
+        expenseList.innerHTML = "";
+        expenseItems.forEach(exp => {
+            const li = document.createElement("li");
+            li.textContent = `${exp.name} - ₹${exp.amount} - ${exp.category}`;
+            expenseList.appendChild(li);
+        });
+
+        updateRemainingBudget();
+    });
 }
+
 
 // ----------------------------
 // Save to localStorage
