@@ -195,7 +195,11 @@ button:hover {
     to { opacity: 1; transform: translateY(0); }
 }
 body {
-    background-image: url("FinAppLogo.png"); /* path to your image */
+    background-image: url("images.jpeg");
+    background-repeat: repeat;      /* 🔑 important */
+    background-size: auto;          /* don’t stretch */
+    background-position: top left;
+    background-color: #0d1117;      /* fallback */
 }
 #header2 {
     display: flex;
