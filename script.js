@@ -1,10 +1,10 @@
 // ----------------------------
-// Global State
+// Global State (NO persistence)
 // ----------------------------
 let yourexpenses = 0;
 let monthlyBudget = 0;
 let monthlyIncome = 0;
-let expenseItems = JSON.parse(localStorage.getItem("expenseItems")) || [];
+let expenseItems = [];
 
 // ----------------------------
 // DOM Elements
@@ -13,22 +13,7 @@ const form = document.getElementById("expenseForm");
 const totalSpan = document.getElementById("totalExpenses");
 const expenseList = document.getElementById("expenseList");
 const addedMsg = document.getElementById("addedMsg");
-
-// ----------------------------
-// Load Saved Data
-// ----------------------------
-monthlyBudget = Number(localStorage.getItem("monthlyBudget")) || 0;
-monthlyIncome = Number(localStorage.getItem("monthlyIncome")) || 0;
-
-document.getElementById("monthlyBudget").innerText =
-  monthlyBudget ? monthlyBudget.toLocaleString("en-US") : "0";
-
-document.getElementById("monthlyIncome").innerText =
-  monthlyIncome ? monthlyIncome.toLocaleString("en-US") : "0";
-
-renderExpenses();
-updateTotalExpenses();
-updateRemainingBudget();
+const rSpan = document.getElementById("RBudget");
 
 // ----------------------------
 // Expense Logic
@@ -45,7 +30,6 @@ if (form) {
 
     expenseItems.push({ name, amount, category });
 
-    saveData();
     renderExpenses();
     updateTotalExpenses();
     updateRemainingBudget();
@@ -94,54 +78,43 @@ function updateTotalExpenses() {
 // ----------------------------
 // Set Monthly Budget
 // ----------------------------
-const budgetInput = document.getElementById("setBudget");
-const budgetBtn = document.getElementById("setBudgetBtn");
-const budgetDisplay = document.getElementById("monthlyBudget");
+document.getElementById("setBudgetBtn")?.addEventListener("click", () => {
+  const input = document.getElementById("setBudget");
+  const amount = Number(input.value);
+  if (isNaN(amount) || amount <= 0) return;
 
-if (budgetBtn) {
-  budgetBtn.addEventListener("click", () => {
-    const amount = Number(budgetInput.value);
-    if (isNaN(amount) || amount <= 0) return;
+  if (monthlyIncome > 0 && amount > monthlyIncome) {
+    alert("Budget cannot exceed income");
+    return;
+  }
 
-    if (monthlyIncome > 0 && amount > monthlyIncome) {
-      alert("Budget cannot exceed income");
-      return;
-    }
+  monthlyBudget = amount;
+  document.getElementById("monthlyBudget").innerText =
+    amount.toLocaleString("en-US");
 
-    monthlyBudget = amount;
-    budgetDisplay.textContent = amount.toLocaleString("en-US");
-    localStorage.setItem("monthlyBudget", amount);
-    budgetInput.value = "";
-
-    updateRemainingBudget();
-  });
-}
+  input.value = "";
+  updateRemainingBudget();
+});
 
 // ----------------------------
 // Set Monthly Income
 // ----------------------------
-const incomeInput = document.getElementById("setIncome");
-const incomeBtn = document.getElementById("setIncomeBtn");
-const incomeDisplay = document.getElementById("monthlyIncome");
+document.getElementById("setIncomeBtn")?.addEventListener("click", () => {
+  const input = document.getElementById("setIncome");
+  const income = Number(input.value);
+  if (isNaN(income) || income <= 0) return;
 
-if (incomeBtn) {
-  incomeBtn.addEventListener("click", () => {
-    const income = Number(incomeInput.value);
-    if (isNaN(income) || income <= 0) return;
+  monthlyIncome = income;
+  document.getElementById("monthlyIncome").innerText =
+    income.toLocaleString("en-US");
 
-    monthlyIncome = income;
-    incomeDisplay.textContent = income.toLocaleString("en-US");
-    localStorage.setItem("monthlyIncome", income);
-    incomeInput.value = "";
-  });
-}
+  input.value = "";
+});
 
 // ----------------------------
 // Remaining Budget
 // ----------------------------
 function updateRemainingBudget() {
-  const rSpan = document.getElementById("RBudget");
-
   const remaining = monthlyBudget - yourexpenses;
 
   rSpan.innerText = remaining.toLocaleString("en-US", {
@@ -150,46 +123,22 @@ function updateRemainingBudget() {
   });
 
   rSpan.style.color =
-    remaining < 0 ? "red" : remaining < monthlyBudget * 0.25 ? "orange" : "#3FB950";
+    remaining < 0 ? "red" :
+    remaining < monthlyBudget * 0.25 ? "orange" :
+    "#3FB950";
 }
 
 // ----------------------------
-// Undo / Delete Last Expense
+// Undo Last Expense
 // ----------------------------
-const undoBtn = document.getElementById("undoBtn");
+document.getElementById("undoBtn")?.addEventListener("click", () => {
+  if (expenseItems.length === 0) {
+    alert("Nothing to undo!");
+    return;
+  }
 
-if (undoBtn) {
-    undoBtn.addEventListener("click", () => {
-        console.log("UNDO CLICKED");
-
-        if (expenseItems.length === 0) {
-            alert("Nothing to undo!");
-            return;
-        }
-
-        expenseItems.pop();
-
-        yourexpenses = expenseItems.reduce(
-            (sum, exp) => sum + exp.amount, 0
-        );
-
-        totalSpan.textContent = yourexpenses.toFixed(2);
-
-        expenseList.innerHTML = "";
-        expenseItems.forEach(exp => {
-            const li = document.createElement("li");
-            li.textContent = `${exp.name} - ₹${exp.amount} - ${exp.category}`;
-            expenseList.appendChild(li);
-        });
-
-        updateRemainingBudget();
-    });
-}
-
-
-// ----------------------------
-// Save to localStorage
-// ----------------------------
-function saveData() {
-  localStorage.setItem("expenseItems", JSON.stringify(expenseItems));
-}
+  expenseItems.pop();
+  renderExpenses();
+  updateTotalExpenses();
+  updateRemainingBudget();
+});
