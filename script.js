@@ -1,65 +1,94 @@
+// ----------------------------
+// Global State
+// ----------------------------
 let yourexpenses = 0;
 let monthlyBudget = 0;
 let monthlyIncome = 0;
-let expenseItems = [];
+let expenseItems = JSON.parse(localStorage.getItem("expenseItems")) || [];
 
 // ----------------------------
-// Expense Logic
+// DOM Elements
 // ----------------------------
 const form = document.getElementById("expenseForm");
 const totalSpan = document.getElementById("totalExpenses");
 const expenseList = document.getElementById("expenseList");
 const addedMsg = document.getElementById("addedMsg");
 
+// ----------------------------
+// Load Saved Data
+// ----------------------------
+monthlyBudget = Number(localStorage.getItem("monthlyBudget")) || 0;
+monthlyIncome = Number(localStorage.getItem("monthlyIncome")) || 0;
+
+document.getElementById("monthlyBudget").innerText =
+  monthlyBudget ? monthlyBudget.toLocaleString("en-US") : "0";
+
+document.getElementById("monthlyIncome").innerText =
+  monthlyIncome ? monthlyIncome.toLocaleString("en-US") : "0";
+
+renderExpenses();
+updateTotalExpenses();
+updateRemainingBudget();
+
+// ----------------------------
+// Expense Logic
+// ----------------------------
 if (form) {
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-        const name = document.getElementById("expName").value.trim();
-        const amount = Number(document.getElementById("expAmount").value);
-        const category = document.getElementById("expCat").value;
+    const name = document.getElementById("expName").value.trim();
+    const amount = Number(document.getElementById("expAmount").value);
+    const category = document.getElementById("expCat").value;
 
-        if (!name || isNaN(amount) || amount <= 0) return;
+    if (!name || isNaN(amount) || amount <= 0) return;
 
-        // Add to total
-        yourexpenses += amount;
+    expenseItems.push({ name, amount, category });
 
-        // Store expense
-        expenseItems.push({ name, amount, category });
+    saveData();
+    renderExpenses();
+    updateTotalExpenses();
+    updateRemainingBudget();
 
-        // Update total display
-        totalSpan.textContent = yourexpenses.toLocaleString("en-US", {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        });
+    if (monthlyBudget > 0 && yourexpenses > monthlyBudget) {
+      alert("You have spent more than your Budget!");
+    }
 
-        // Render expense list
-        expenseList.innerHTML = "";
-        expenseItems.forEach(exp => {
-            const li = document.createElement("li");
-            li.textContent = `${exp.name} - ₹${exp.amount.toLocaleString("en-US")} - ${exp.category}`;
-            expenseList.appendChild(li);
-        });
+    if (monthlyIncome > 0 && yourexpenses > monthlyIncome) {
+      alert("You are in debt");
+    }
 
-        // Budget alerts
-        if (monthlyBudget > 0 && yourexpenses > monthlyBudget) {
-            alert("You have spent more than your Budget!");
-        }
+    addedMsg.style.display = "block";
+    setTimeout(() => (addedMsg.style.display = "none"), 1500);
 
-        if (monthlyIncome > 0 && yourexpenses > monthlyIncome) {
-            alert("You are in debt");
-        }
+    document.getElementById("expName").value = "";
+    document.getElementById("expAmount").value = "";
+  });
+}
 
-        // Confirmation
-        addedMsg.style.display = "block";
-        setTimeout(() => addedMsg.style.display = "none", 1500);
+// ----------------------------
+// Render Expenses
+// ----------------------------
+function renderExpenses() {
+  expenseList.innerHTML = "";
 
-        // Clear inputs
-        document.getElementById("expName").value = "";
-        document.getElementById("expAmount").value = "";
+  expenseItems.forEach(exp => {
+    const li = document.createElement("li");
+    li.textContent = `${exp.name} - ₹${exp.amount.toLocaleString("en-US")} - ${exp.category}`;
+    expenseList.appendChild(li);
+  });
+}
 
-        updateRemainingBudget(); // ✅ FIX: recalc after expense
-    });
+// ----------------------------
+// Totals
+// ----------------------------
+function updateTotalExpenses() {
+  yourexpenses = expenseItems.reduce((sum, exp) => sum + exp.amount, 0);
+
+  totalSpan.textContent = yourexpenses.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
 }
 
 // ----------------------------
@@ -70,21 +99,22 @@ const budgetBtn = document.getElementById("setBudgetBtn");
 const budgetDisplay = document.getElementById("monthlyBudget");
 
 if (budgetBtn) {
-    budgetBtn.addEventListener("click", () => {
-        const amount = Number(budgetInput.value);
-        if (isNaN(amount) || amount <= 0) return;
+  budgetBtn.addEventListener("click", () => {
+    const amount = Number(budgetInput.value);
+    if (isNaN(amount) || amount <= 0) return;
 
-        if (monthlyIncome > 0 && amount > monthlyIncome) {
-            alert("Budget cannot exceed income");
-            return;
-        }
+    if (monthlyIncome > 0 && amount > monthlyIncome) {
+      alert("Budget cannot exceed income");
+      return;
+    }
 
-        monthlyBudget = amount;
-        budgetDisplay.textContent = amount.toLocaleString("en-US");
-        budgetInput.value = "";
+    monthlyBudget = amount;
+    budgetDisplay.textContent = amount.toLocaleString("en-US");
+    localStorage.setItem("monthlyBudget", amount);
+    budgetInput.value = "";
 
-        updateRemainingBudget(); // ✅ FIX: recalc after setting budget
-    });
+    updateRemainingBudget();
+  });
 }
 
 // ----------------------------
@@ -94,44 +124,51 @@ const incomeInput = document.getElementById("setIncome");
 const incomeBtn = document.getElementById("setIncomeBtn");
 const incomeDisplay = document.getElementById("monthlyIncome");
 
-const savedIncome = localStorage.getItem("monthlyIncome");
-if (savedIncome) {
-    monthlyIncome = Number(savedIncome);
-    incomeDisplay.textContent = monthlyIncome.toLocaleString("en-US");
-}
-
 if (incomeBtn) {
-    incomeBtn.addEventListener("click", () => {
-        const income = Number(incomeInput.value);
-        if (isNaN(income) || income <= 0) return;
+  incomeBtn.addEventListener("click", () => {
+    const income = Number(incomeInput.value);
+    if (isNaN(income) || income <= 0) return;
 
-        monthlyIncome = income;
-        incomeDisplay.textContent = income.toLocaleString("en-US");
-        localStorage.setItem("monthlyIncome", income);
-        incomeInput.value = "";
-    });
+    monthlyIncome = income;
+    incomeDisplay.textContent = income.toLocaleString("en-US");
+    localStorage.setItem("monthlyIncome", income);
+    incomeInput.value = "";
+  });
 }
 
 // ----------------------------
-// Remaining Budget (FIXED)
+// Remaining Budget
 // ----------------------------
 function updateRemainingBudget() {
-    const budgetSpan = document.getElementById("monthlyBudget");
-    const expensesSpan = document.getElementById("totalExpenses");
-    const rSpan = document.getElementById("RBudget");
+  const rSpan = document.getElementById("RBudget");
 
-    if (!budgetSpan || !expensesSpan || !rSpan) return;
+  const remaining = monthlyBudget - yourexpenses;
 
-    // ✅ FIX: spans use innerText, not value
-    const currentBudget = Number(budgetSpan.innerText.replace(/,/g, "")) || 0;
-    const totalExpenses = Number(expensesSpan.innerText.replace(/,/g, "")) || 0;
+  rSpan.innerText = remaining.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
 
-    const remaining = currentBudget - totalExpenses;
+  rSpan.style.color =
+    remaining < 0 ? "red" : remaining < monthlyBudget * 0.25 ? "orange" : "#3FB950";
+}
 
-    rSpan.innerText = remaining.toLocaleString("en-US", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-    });
+// ----------------------------
+// Undo / Delete Last Expense
+// ----------------------------
+function deleteLastExpense() {
+  if (expenseItems.length === 0) return;
 
-    rSpan.style.color = remaining < 0 ? "red" : "#3FB950";
+  expenseItems.pop();
+  saveData();
+  renderExpenses();
+  updateTotalExpenses();
+  updateRemainingBudget();
+}
+
+// ----------------------------
+// Save to localStorage
+// ----------------------------
+function saveData() {
+  localStorage.setItem("expenseItems", JSON.stringify(expenseItems));
 }

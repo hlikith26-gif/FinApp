@@ -44,7 +44,7 @@
         <h2>All Expenses</h2>
         <i>List:</i>
         <ul id="expenseList" class="categories"></ul>
-
+        
     </div>
 
     <!-- Set Income -->
@@ -75,6 +75,8 @@
                 <option>Others</option>
             </select>
             <button type="submit">Add Expense</button>
+            <button type="button" id="undoBtn">Undo Last Expense</button>
+
         </form>
         <p id="addedMsg" style="display:none;color:#3FB950;">Expense added ✅</p>
     </div>
@@ -113,5 +115,7 @@
         <button class="about-button">About Us</button>
     </a>
     <i style="text-align: center; font-weight: lighter;">FinApp Finance: 6th Dec 2025</i>
+    <button onclick="deleteLastExpense()">Undo Last</button>
+
 </body>
 </html>
