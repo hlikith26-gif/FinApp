@@ -142,3 +142,32 @@ document.getElementById("undoBtn")?.addEventListener("click", () => {
   updateTotalExpenses();
   updateRemainingBudget();
 });
+document.addEventListener("DOMContentLoaded", () => {
+  const resetBtn = document.getElementById("resetAll");
+
+  if (!resetBtn) return;
+
+  resetBtn.addEventListener("click", () => {
+    const sure = confirm("Are you sure you want to reset all your finance data?");
+    if (!sure) return;
+
+    // Reset forms
+    document.querySelectorAll("form").forEach(form => {
+      form.reset();
+    });
+
+    // Reset displays
+    document.getElementById("monthlyBudget").textContent = "0";
+    document.getElementById("RBudget").textContent = "0";
+    document.getElementById("totalExpenses").textContent = "0.00";
+    document.getElementById("monthlyIncome").textContent = "0";
+
+    // Clear expense list
+    document.getElementById("expenseList").innerHTML = "";
+
+    // Clear saved data
+    localStorage.clear();
+
+    alert("All data has been reset!");
+  });
+});
