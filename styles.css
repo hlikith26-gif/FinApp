@@ -195,7 +195,7 @@ button:hover {
     to { opacity: 1; transform: translateY(0); }
 }
 body {
-    background-image: url('Screenshot 2025-12-07 111515.png'); /* path to your image */
+    background-image: url("FinAppLogo.png"); /* path to your image */
 }
 #header2 {
     display: flex;
