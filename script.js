@@ -1,10 +1,32 @@
 // ----------------------------
-// Global State (NO persistence)
+// Global State
 // ----------------------------
 let yourexpenses = 0;
 let monthlyBudget = 0;
 let monthlyIncome = 0;
 let expenseItems = [];
+
+// ----------------------------
+// Load saved data on page start
+// ----------------------------
+function loadFromStorage() {
+  const savedItems = localStorage.getItem("expenseItems");
+  const savedBudget = localStorage.getItem("monthlyBudget");
+  const savedIncome = localStorage.getItem("monthlyIncome");
+
+  if (savedItems) expenseItems = JSON.parse(savedItems);
+  if (savedBudget) monthlyBudget = Number(savedBudget);
+  if (savedIncome) monthlyIncome = Number(savedIncome);
+}
+
+// ----------------------------
+// Save data to localStorage
+// ----------------------------
+function saveToStorage() {
+  localStorage.setItem("expenseItems", JSON.stringify(expenseItems));
+  localStorage.setItem("monthlyBudget", monthlyBudget);
+  localStorage.setItem("monthlyIncome", monthlyIncome);
+}
 
 // ----------------------------
 // DOM Elements
@@ -29,6 +51,7 @@ if (form) {
     if (!name || isNaN(amount) || amount <= 0) return;
 
     expenseItems.push({ name, amount, category });
+    saveToStorage(); // ← save after adding
 
     renderExpenses();
     updateTotalExpenses();
@@ -93,6 +116,7 @@ document.getElementById("setBudgetBtn")?.addEventListener("click", () => {
     amount.toLocaleString("en-US");
 
   input.value = "";
+  saveToStorage(); // ← save after setting budget
   updateRemainingBudget();
 });
 
@@ -109,6 +133,7 @@ document.getElementById("setIncomeBtn")?.addEventListener("click", () => {
     income.toLocaleString("en-US");
 
   input.value = "";
+  saveToStorage(); // ← save after setting income
 });
 
 // ----------------------------
@@ -138,36 +163,54 @@ document.getElementById("undoBtn")?.addEventListener("click", () => {
   }
 
   expenseItems.pop();
+  saveToStorage(); // ← save after undo
   renderExpenses();
   updateTotalExpenses();
   updateRemainingBudget();
 });
-document.addEventListener("DOMContentLoaded", () => {
-  const resetBtn = document.getElementById("resetAll");
 
+// ----------------------------
+// Reset All
+// ----------------------------
+document.addEventListener("DOMContentLoaded", () => {
+  // Load saved data first
+  loadFromStorage();
+
+  // Update UI with loaded data
+  if (monthlyBudget > 0) {
+    document.getElementById("monthlyBudget").innerText =
+      monthlyBudget.toLocaleString("en-US");
+  }
+  if (monthlyIncome > 0) {
+    document.getElementById("monthlyIncome").innerText =
+      monthlyIncome.toLocaleString("en-US");
+  }
+
+  renderExpenses();
+  updateTotalExpenses();
+  updateRemainingBudget();
+
+  // Reset button
+  const resetBtn = document.getElementById("resetAll");
   if (!resetBtn) return;
 
   resetBtn.addEventListener("click", () => {
     const sure = confirm("Are you sure you want to reset all your finance data?");
     if (!sure) return;
 
-    // Reset forms
-    document.querySelectorAll("form").forEach(form => {
-      form.reset();
-    });
+    expenseItems = [];
+    monthlyBudget = 0;
+    monthlyIncome = 0;
+    yourexpenses = 0;
 
-    // Reset displays
+    document.querySelectorAll("form").forEach(form => form.reset());
     document.getElementById("monthlyBudget").textContent = "0";
     document.getElementById("RBudget").textContent = "0";
     document.getElementById("totalExpenses").textContent = "0.00";
     document.getElementById("monthlyIncome").textContent = "0";
-
-    // Clear expense list
     document.getElementById("expenseList").innerHTML = "";
 
-    // Clear saved data
     localStorage.clear();
-
     alert("All data has been reset!");
   });
 });
